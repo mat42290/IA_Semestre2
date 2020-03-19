@@ -2,7 +2,7 @@
 	Ce programme met en oeuvre l'algorithme Minmax (avec convention
 	negamax) et l'illustre sur le jeu du TicTacToe (morpion 3x3)
 	*/
-	
+
 :- [tictactoe].
 
 
@@ -21,9 +21,9 @@
 	pouvant aller jusqu'a la profondeur Pmax.
 
 	Il y a 3 cas a decrire (donc 3 clauses pour negamax/5)
-	
+
 	1/ la profondeur maximale est atteinte : on ne peut pas
-	developper cet Etat ; 
+	developper cet Etat ;
 	il n'y a donc pas de coup possible a jouer (Coup = rien)
 	et l'evaluation de Etat est faite par l'heuristique.
 
@@ -34,7 +34,7 @@
 	et l'evaluation de Etat est faite par l'heuristique.
 
 	3/ la profondeur maxi n'est pas atteinte et J peut encore
-	jouer. Il faut evaluer le sous-arbre complet issu de Etat ; 
+	jouer. Il faut evaluer le sous-arbre complet issu de Etat ;
 
 	- on determine d'abord la liste de tous les couples
 	[Coup_possible, Situation_suivante] via le predicat
@@ -65,20 +65,22 @@ negamax(J,Etat,P,Pmax,[Coup,Val]) :-
         successeurs(J,Etat,Coups),
         loop_negamax(J,P,Pmax,CoupsNew,Coups),
         meilleur(CoupsNew,Best),
-        
-    )
+				Best is [C1,V1],
+        Coup = C1,
+				Val = -V1
+    ).
 
 
 	/*******************************************
 	 DEVELOPPEMENT D'UNE SITUATION NON TERMINALE
-	 successeurs/3 
+	 successeurs/3
 	 *******************************************/
 
 	 /*
    	 successeurs(+J,+Etat, ?Succ)
 
    	 retourne la liste des couples [Coup, Etat_Suivant]
- 	 pour un joueur donne dans une situation donnee 
+ 	 pour un joueur donne dans une situation donnee
 	 */
 
 successeurs(J,Etat,Succ) :-
@@ -88,7 +90,7 @@ successeurs(J,Etat,Succ) :-
 		    Succ).
 
 	/*************************************
-         Boucle permettant d'appliquer negamax 
+         Boucle permettant d'appliquer negamax
          a chaque situation suivante :
 	*************************************/
 
@@ -114,7 +116,7 @@ A FAIRE : commenter chaque litteral de la 2eme clause de loop_negamax/5,
 
 	/*********************************
 	 Selection du couple qui a la plus
-	 petite valeur V 
+	 petite valeur V
 	 *********************************/
 
 	/*
@@ -124,13 +126,23 @@ A FAIRE : commenter chaque litteral de la 2eme clause de loop_negamax/5,
 	On suppose que chaque element de la liste est du type [C,V]
 	- le meilleur dans une liste a un seul element est cet element
 	- le meilleur dans une liste [X|L] avec L \= [], est obtenu en comparant
-	  X et Y,le meilleur couple de L 
+	  X et Y,le meilleur couple de L
 	  Entre X et Y on garde celui qui a la petite valeur de V.
 
 A FAIRE : ECRIRE ici les clauses de meilleur/2
 	*/
 
-
+meilleur([Elem], Elem).
+meilleur([First|Rest], Best) :-
+	Rest \= [],
+	First is [C1,V1],
+	meilleur(Rest, Best2),
+	Best2 is [C2,V2],
+	( V1 < V2 ->
+		Best = First
+	;
+		Best = Best2
+	).
 
 	/******************
   	PROGRAMME PRINCIPAL
@@ -138,7 +150,7 @@ A FAIRE : ECRIRE ici les clauses de meilleur/2
 
 main(B,V, Pmax) :-
 
-	true.        
+	true.
 
 
 	/*
@@ -147,4 +159,3 @@ A FAIRE :
 	Pmax = 1, 2, 3, 4 ...
 	Commentez les résultats obtenus.
 	*/
-
