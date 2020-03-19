@@ -151,7 +151,6 @@ main(B,V,Pmax) :-
 	joueur_initial(Jini),
 	negamax(Jini,Ini,1,Pmax,[B,V]).
 
-
 	/*
 A FAIRE :
 	Compléter puis tester le programme principal pour plusieurs valeurs de la profondeur maximale.
