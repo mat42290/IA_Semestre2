@@ -57,19 +57,19 @@ A FAIRE : ECRIRE ici les clauses de negamax/5
 .....................................
 	*/
 
-negamax(J,Etat,P,Pmax,[Coup,Val]) :-
-    ( P == Pmax | situation_terminale(J,Etat) ->
-        Coup = rien,
-        heuristique(J,Etat,Val)
-    ;
-        successeurs(J,Etat,Coups),
-        loop_negamax(J,P,Pmax,CoupsNew,Coups),
-        meilleur(CoupsNew,Best),
-				Best is [C1,V1],
-        Coup = C1,
-				Val = -V1
-    ).
-
+negamax(J,Etat,Pmax,Pmax,[rien,H]) :-
+		heuristique(J,Etat,H).
+negamax(J,Etat,P,Pmax,[rien,H]) :-
+		P<Pmax,
+		situation_terminale(J,Etat),
+		heuristique(J,Etat,H).
+negamax(J,Etat,P,Pmax,[Coup,V2]) :-
+    P<Pmax,
+		not(situation_terminale(J,Etat)),
+		successeurs(J,Etat,Coups),
+  	loop_negamax(J,P,Pmax,Coups,Liste),
+    meilleur(Liste,[Coup,V1]),
+		V2 is -V1.
 
 	/*******************************************
 	 DEVELOPPEMENT D'UNE SITUATION NON TERMINALE
@@ -146,10 +146,10 @@ A FAIRE : ECRIRE ici les clauses de meilleur/2
   	PROGRAMME PRINCIPAL
   	*******************/
 
-main(B,V, Pmax) :-
+main(B,V,Pmax) :-
 	situation_initiale(Ini),
 	joueur_initial(Jini),
-	negamax(Jini,Ini,1,Pmax,[Coup,Val]).
+	negamax(Jini,Ini,1,Pmax,[B,V]).
 
 
 	/*
