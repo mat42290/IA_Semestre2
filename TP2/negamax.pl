@@ -137,7 +137,7 @@ A FAIRE : ECRIRE ici les clauses de meilleur/2
 
 	meilleur(X,X,[]).
 	meilleur([C1,V1],M,[[_,V2]|Liste]):-
-		V1<V2,
+		V1<V2,!,
 		meilleur([C1,V1],M,Liste).
 	meilleur(_,M,[Y|Liste]):-
 		meilleur(Y,M,Liste).
@@ -147,8 +147,9 @@ A FAIRE : ECRIRE ici les clauses de meilleur/2
   	*******************/
 
 main(B,V, Pmax) :-
-
-	true.
+	situation_initiale(Ini),
+	joueur_initial(Jini),
+	negamax(Jini,Ini,1,Pmax,[Coup,Val]).
 
 
 	/*
