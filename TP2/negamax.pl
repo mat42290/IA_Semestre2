@@ -132,17 +132,15 @@ A FAIRE : commenter chaque litteral de la 2eme clause de loop_negamax/5,
 A FAIRE : ECRIRE ici les clauses de meilleur/2
 	*/
 
-meilleur([Elem], Elem).
-meilleur([First|Rest], Best) :-
-	Rest \= [],
-	First is [C1,V1],
-	meilleur(Rest, Best2),
-	Best2 is [C2,V2],
-	( V1 < V2 ->
-		Best = First
-	;
-		Best = Best2
-	).
+	meilleur([X|Liste],M):-
+		meilleur(X,M,Liste).
+
+	meilleur(X,X,[]).
+	meilleur([C1,V1],M,[[_,V2]|Liste]):-
+		V1<V2,
+		meilleur([C1,V1],M,Liste).
+	meilleur(_,M,[Y|Liste]):-
+		meilleur(Y,M,Liste).
 
 	/******************
   	PROGRAMME PRINCIPAL
