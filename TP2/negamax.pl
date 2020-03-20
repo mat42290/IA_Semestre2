@@ -89,6 +89,11 @@ successeurs(J,Etat,Succ) :-
 		    successeur(J,Etat_Suiv,Coup),
 		    Succ).
 
+/* Requête de test successeurs */
+test_successeurs(Succ) :-
+	situation_initiale(Ini),
+	successeurs(x,Ini,Succ).
+
 	/*************************************
          Boucle permettant d'appliquer negamax
          a chaque situation suivante :
@@ -100,7 +105,7 @@ successeurs(J,Etat,Succ) :-
 	a partir de la liste des couples [Coup, Situation_Suivante]
 	*/
 
-loop_negamax(_,_, _  ,[],                []).
+loop_negamax(_,_,_,[],[]).
 loop_negamax(J,P,Pmax,[[Coup,Suiv]|Succ],[[Coup,Vsuiv]|Reste_Couples]) :-
 	loop_negamax(J,P,Pmax,Succ,Reste_Couples),
 	adversaire(J,A),
