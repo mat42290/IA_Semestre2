@@ -134,7 +134,8 @@ test_possible3() :-
 	faut pas realiser l'unification.
 	*/
 
-unifiable(X,J) :- \+ \+ X=J.
+unifiable(X,_) :- var(X).
+unifiable(X,J):-ground(X), X==J.
 
 	/**********************************
 	 DEFINITION D'UN ALIGNEMENT GAGNANT
@@ -186,9 +187,8 @@ test_alignement_perdant3() :-
 successeur(J,Etat,[L,C]) :-
     nth1(L,Etat,Ligne),
     nth1(C,Ligne,Elem),
-    ( var(Elem) ->
-        Elem=J
-    ).
+    var(Elem),
+    Elem=J.
 
 	/**************************************
    	 EVALUATION HEURISTIQUE D'UNE SITUATION
