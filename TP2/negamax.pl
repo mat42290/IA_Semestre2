@@ -64,11 +64,11 @@ negamax(J,Etat,P,Pmax,[rien,H]) :-
 		situation_terminale(J,Etat),
 		heuristique(J,Etat,H).
 negamax(J,Etat,P,Pmax,[Coup,V2]) :-
-    P<Pmax,
+    		P<Pmax,
 		not(situation_terminale(J,Etat)),
 		successeurs(J,Etat,Coups),
-  	loop_negamax(J,P,Pmax,Coups,Liste),
-    meilleur(Liste,[Coup,V1]),
+  		loop_negamax(J,P,Pmax,Coups,Liste),
+    		meilleur(Liste,[Coup,V1]),
 		V2 is -V1.
 
 	/*******************************************
