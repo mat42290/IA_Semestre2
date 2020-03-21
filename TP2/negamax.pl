@@ -84,9 +84,8 @@ negamax(J,Etat,P,Pmax,[Coup,V2]) :-
 	 */
 
 successeurs(J,Etat,Succ) :-
-	copy_term(Etat, Etat_Suiv),
 	findall([Coup,Etat_Suiv],
-		    successeur(J,Etat_Suiv,Coup),
+		    (copy_term(Etat, Etat_Suiv),successeur(J,Etat_Suiv,Coup)),
 		    Succ).
 
 /* Requête de test successeurs */
