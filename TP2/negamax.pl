@@ -153,7 +153,7 @@ A FAIRE : ECRIRE ici les clauses de meilleur/2
 main(B,V,Pmax) :-
 	situation_initiale(Ini),
 	joueur_initial(Jini),
-	negamax(Jini,Ini,1,Pmax,[B,V]).
+	negamax(Jini,Ini,0,Pmax,[B,V]).
 
 	/*
 A FAIRE :
